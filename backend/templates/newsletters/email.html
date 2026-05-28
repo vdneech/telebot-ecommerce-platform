@@ -1,10 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ newsletter.title }}</title>
+
+    <style type="text/css">
+        html { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
+
+        @media only screen and (max-device-width:660px), only screen and (max-width:660px) {
+            .em-narrow-table { width: 100%!important; max-width: 660px!important; min-width: 320px!important; }
+            .em-mob-wrap { display: block!important; }
+            .em-mob-width-100perc { width: 100%!important; max-width: 100%!important; }
+            .em-mob-spacing { height: 20px!important; }
+        }
+    </style>
 </head>
-<body>
-    Текстовая рассылка!
-</body>
-</html>
+
+<body style="margin: 0; padding: 0; background-color: #F8F8F8;">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#F8F8F8">
+        <tr>
+            <td align="center">
+                <table cellpadding="0" cellspacing="0" width="100%" border="0" style="max-width: 660px; padding-top: 50px;" class="em-narrow-table">
+
+                    <tr><td height="70"></td></tr>
+
+
+                    <tr>
+                        <td align="center" style="padding: 30px 40px; border-radius: 10px 10px 0 0; background-color: #1c1c1c;" bgcolor="#1c1c1c">
+                            <img src="{{ base_url }}/server-static/images/logo.png" width="65" border="0" alt="Логотип" style="display: block; width: 65px; max-width: 65px;">
+                            <div style="font-family: Arial, sans-serif; font-size: 20px; line-height: 32px; color: #fdfdfd; padding-top: 20px;">
+                                <strong>{{ newsletter.title }}</strong>
+                            </div>
+                            <div style="font-family: Arial, sans-serif; font-size: 16px; color: #f5f5f5; padding-top: 10px;">
+                                {% if user.first_name %}Привет, {{ user.first_name }}!{% else %}Привет, гость!{% endif %}
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="center" style="padding: 30px 40px; background-color: #ffffff;" bgcolor="#ffffff">
+                            <div style="font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; color: #1c1c1c; text-align: left;">
+                                {{ newsletter.message|safe|linebreaksbr }}
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    {% if newsletter.images.all %}
+                    <tr>
+                        <td align="center" style="padding: 20px 40px; background-color: #fdfdfd;" bgcolor="#fdfdfd">
+                            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                                {% for img_obj in newsletter.images.all %}
+                                    {% if forloop.counter0|divisibleby:2 %}
+                                    <tr>
+                                    {% endif %}
+                                        <td width="275" class="em-mob-wrap em-mob-width-100perc" style="padding-bottom: 20px;">
+                                            <a href="https://t.me/guest_seasons_bot" target="_blank">
+                                                <img src="{{ base_url }}{{ img_obj.image.url }}" width="275" style="width: 100%; max-width: 275px; border: dashed 2px #1c1c1c; border-radius: 12px; display: block;" alt="Newsletter Image">
+                                            </a>
+                                        </td>
+                                        {% if not forloop.last and forloop.counter|divisibleby:2 %}
+                                        <td width="30" class="em-mob-wrap em-mob-spacing"></td>
+                                        {% elif forloop.counter|divisibleby:2 %}
+                                    </tr>
+                                        {% endif %}
+                                {% endfor %}
+                                {% if newsletter.images.all|length|divisibleby:2 == False %}
+                                    </tr>
+                                {% endif %}
+                            </table>
+                        </td>
+                    </tr>
+                    {% endif %}
+
+
+                    <tr>
+                        <td align="center" style="padding: 20px 40px; background-color: #ffffff;" bgcolor="#ffffff">
+                            <a href="https://t.me/guest_seasons_bot" target="_blank" style="text-decoration: none; color: #F8F7E2; display: block;">
+                                <div style="background: #1c1c1c; padding: 15px; border-radius: 10px; text-align: center; font-family: Arial, sans-serif; font-size: 16px;">
+                                    Перейти в бота
+                                </div>
+                            </a>
+                            <div style="font-family: Arial, sans-serif; font-size: 16px; color: #1c1c1c; padding-top: 20px; text-align: center;">
+                                С любовью, твои <strong>Сезоны</strong>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="center" style="padding: 25px 40px; background-color: #1c1c1c; border-radius: 0 0 10px 10px;" bgcolor="#1c1c1c">
+                            <div style="font-family: Arial, sans-serif; font-size: 14px; color: #f8f7e2;">
+                                Пожалуйста, не отвечайте на эту рассылку
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="center" style="padding: 20px 0 50px;">
+                            <div style="font-family: Arial, sans-serif; font-size: 14px; color: #a8a8a8;">
+                                © 2025 Guest Four Seasons. All rights reserved
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr><td height="70"></td></tr>
+                </table>
